@@ -15,17 +15,16 @@ public enum  BrowserFactory {
             options.addArguments("--disable-notifications");
             return  new ChromeDriver(options);
         }
-    },
-    firefox {
+        /*  } ,
+   firefox {
         public WebDriver create() {
             updateProperty("firefox");
             System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE, "true");
             System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "./src/test/java/firefox_logs/log");
-
             FirefoxOptions options = new FirefoxOptions();
             options.addPreference("dom.webnotifications.enabled", false);
             return new FirefoxDriver(options);
-        }
+        }*/
     };
 
     public WebDriver create() {

@@ -2,23 +2,19 @@ package TestProject;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
 import java.util.concurrent.TimeUnit;
 
 public class BaseRunner {
-    private static ThreadLocal<WebDriver> tl = new ThreadLocal<>();
-    WebDriver driver;
-    private String browserName = System.getProperty("browser");
-    String baseUrl;
+   protected WebDriver driver;
+   public String baseUrl;
 
     
     @Before
     public void setUp(){
-        if (tl.get() != null) {
-            driver = tl.get();
-        } else {
-            driver = getDriver();
-            tl.set(driver);
-        }
+    	System.setProperty("webdriver.chrome.driver", "/C:/Users/Anna Gudkova/chromedriver.exe");
+    	driver = new ChromeDriver();
         driver.manage().window().maximize();
         baseUrl = "https://www.tinkoff.ru/career/vacancies/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -31,15 +27,5 @@ public class BaseRunner {
     @After
     public void tearDown()  {
       driver.quit();
-    }
-
-    private WebDriver getDriver() {
-        try {
-            BrowserFactory.valueOf(System.getProperty("browser"));
-        } catch (NullPointerException | IllegalArgumentException e) {
-            browserName = BrowserFactory.values()[0].toString();
-            System.setProperty("browser", browserName);
-        }
-        return BrowserFactory.valueOf(browserName).create();
     }
 }
